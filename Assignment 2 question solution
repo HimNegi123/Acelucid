@@ -1,0 +1,58 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Enter a string:");
+        string input = Console.ReadLine();
+        int dateFormatLength = 8;
+
+        for (int i = 0; i <= input.Length - dateFormatLength; i++)
+        {
+            string substring = input.Substring(i, dateFormatLength);
+            if (IsValidDate(substring))
+            {
+                Console.WriteLine("Valid Date: " + substring);
+            }
+        }
+    }
+
+    // Function to check if a string represents a valid date in MMDDYYYY format
+    static bool IsValidDate(string str)
+    {
+        if (str.Length != 8)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < str.Length; i++)
+        {
+            if (!char.IsDigit(str[i]))
+            {
+                return false;
+            }
+        }
+
+        int month = int.Parse(str.Substring(0, 2));
+        int day = int.Parse(str.Substring(2, 2));
+        int year = int.Parse(str.Substring(4, 4));
+
+        if (month < 1 || month > 12)
+        {
+            return false;
+        }
+
+        if (day < 1 || day > DateTime.DaysInMonth(year, month))
+        {
+            return false;
+        }
+
+        if (year < 1900 || year > DateTime.Now.Year)
+        {
+            return false;
+        }
+
+        return true;
+    }
+}
